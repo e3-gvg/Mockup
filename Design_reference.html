@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>IIoT Operations Dashboard - Merged Style</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<style type="text/tailwindcss">
+        :root {
+            --dark-bg: #1a1a1a;
+            --medium-bg: #2c2c2c;
+            --text-primary: #f0f0f0;
+            --text-secondary: #b0b0b0;
+            --accent-blue: #00aaff;
+            --accent-green: #00ffaa;
+            --accent-yellow: #ffd633;
+            --accent-red: #ff4d4d;
+            --glass-bg: rgba(45, 45, 45, 0.35);
+            --glass-bg-title: rgba(50, 50, 50, 0.45);
+            --glass-border: transparent;
+            --glass-border-light: rgba(255, 255, 255, 0.08);
+            --soft-shadow: 0px 20px 50px rgba(0, 0, 0, 0.3), 0px 8px 20px rgba(0, 0, 0, 0.2);
+            --halo-effect: 0 0 50px rgba(45, 45, 45, 0.7), 0 0 15px rgba(55, 55, 55, 0.6);
+            --satin-sheen: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 60%);
+            --shimmer-effect: linear-gradient(110deg, transparent 25%, rgba(255, 255, 255, 0.18) 50%, transparent 75%);
+            --gradual-border: 
+                inset 0 0 0 1px rgba(255, 255, 255, 0.06), 0 0 8px 1px rgba(255, 255, 255, 0.03);
+            --border-fade: radial-gradient(ellipse 100% 100% at 50% 50%, rgba(255, 255, 255, 0.04), transparent 60%);
+        }
+        body {
+            background: linear-gradient(to bottom right, var(--dark-bg), #3a3a3a);
+            font-family: 'Inter', sans-serif;
+            color: var(--text-primary);
+            width: 1920px;
+            height: 1080px;
+            overflow: hidden;
+            position: relative;
+        }
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="6" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)"/></svg>');
+            background-blend-mode: overlay;
+            opacity: 0.035;
+            z-index: -2;
+            pointer-events: none;
+        }
+        .liquid-glass::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><filter id="f" x="0" y="0"><feTurbulence type="fractalNoise" baseFrequency="0.008 0.004" numOctaves="3" result="noise" seed="10" /><feDisplacementMap in="SourceGraphic" in2="noise" scale="120" xChannelSelector="R" yChannelSelector="B" /></filter><rect width="100%" height="100%" filter="url(%23f)" opacity="0.1"/></svg>');
+            background-size: cover;
+            pointer-events: none;
+            mix-blend-mode: screen;
+            animation: liquid-flow 25s infinite linear;
+            z-index: -1;
+            opacity: 0.1;
+        }
+        @keyframes liquid-flow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .glassmorphism {
+            background: var(--glass-bg);
+            background-image: var(--satin-sheen), var(--border-fade);
+            backdrop-filter: blur(35px) saturate(1.1);
+            -webkit-backdrop-filter: blur(35px) saturate(1.1);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--soft-shadow), var(--halo-effect), var(--gradual-border);
+            position: relative;
+            overflow: hidden;
+        }
+        .glassmorphism-titlebar {
+            background: var(--glass-bg-title);
+            background-image: var(--satin-sheen), var(--border-fade);
+            backdrop-filter: blur(30px) saturate(1.05);
+            -webkit-backdrop-filter: blur(30px) saturate(1.05);
+            border-bottom: 1px solid var(--glass-border);
+            box-shadow: 0px 15px 35px rgba(0, 0, 0, 0.35), var(--halo-effect), 
+                         inset 0 -1px 0 0 rgba(255, 255, 255, 0.06), 0 0 8px 1px rgba(255, 255, 255, 0.03);
+        }
+        .glassmorphism-sidebar {
+            background: var(--glass-bg);
+            background-image: var(--satin-sheen), var(--border-fade);
+            backdrop-filter: blur(40px) saturate(1.15);
+            -webkit-backdrop-filter: blur(40px) saturate(1.15);
+            border-right: 1px solid var(--glass-border);
+            box-shadow: var(--soft-shadow), var(--halo-effect), 
+                         inset -1px 0 0 0 rgba(255, 255, 255, 0.06), 0 0 8px 1px rgba(255, 255, 255, 0.03);
+        }
+        .glassmorphism-inner {
+            background: rgba(36, 38, 43, 0.4);
+            background-image: var(--satin-sheen), var(--border-fade);
+            backdrop-filter: blur(25px) saturate(1.05);
+            -webkit-backdrop-filter: blur(25px) saturate(1.05);
+            border-radius: 24px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.25), 0 0 25px rgba(40, 40, 40, 0.45), 0 0 8px rgba(50, 50, 50, 0.55), var(--gradual-border);
+            transition: border 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .glassmorphism-inner:hover::before,
+        .glassmorphism-titlebar:hover::before,
+        .glassmorphism-sidebar:hover::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -150%;
+            width: 100%;
+            height: 100%;
+            background: var(--shimmer-effect);
+            transform: skewX(-25deg);
+            animation: shimmer 1s forwards;
+            animation-timing-function: cubic-bezier(0.7, 0, 0.3, 1);
+        }
+        @keyframes shimmer {
+            100% {
+                left: 150%;
+            }
+        }
+        .status-circle {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+        .status-green {
+            background-color: var(--accent-green);
+            box-shadow: 0 0 8px var(--accent-green), 0 0 16px var(--accent-green);
+        }
+        .status-yellow {
+            background-color: var(--accent-yellow);
+            box-shadow: 0 0 8px var(--accent-yellow), 0 0 16px var(--accent-yellow);
+        }
+        .status-red {
+            background-color: var(--accent-red);
+            box-shadow: 0 0 8px var(--accent-red), 0 0 16px var(--accent-red);
+        }
+        .glassmorphism-switch {
+            background: rgba(0, 0, 0, 0.25);
+            border-radius: 9999px;
+            border: 1px solid var(--glass-border);
+            cursor: pointer;
+            width: 56px;
+            height: 30px;
+            position: relative;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25), 0 0 18px rgba(40, 40, 40, 0.4), var(--gradual-border);
+            background-image: var(--satin-sheen);
+        }
+        .switch-handle {
+            background-color: var(--accent-blue);
+            box-shadow: 0 0 10px var(--accent-blue), 1px 1px 2px rgba(0, 0, 0, 0.15), 0 3px 6px rgba(0, 0, 0, 0.25);
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            position: absolute;
+            top: 3px;
+            left: 4px;
+            transition: left 0.2s ease-in-out;
+        }
+        .switch-handle.on {
+            left: 30px;
+        }
+        .glass-gauge {
+            background: radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0) 50%), radial-gradient(circle, rgba(60, 60, 60, 0.15) 0%, rgba(60, 60, 60, 0.35) 100%);
+            backdrop-filter: blur(20px) saturate(1.05);
+            -webkit-backdrop-filter: blur(20px) saturate(1.05);
+            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.25), var(--gradual-border);
+        }
+        .text-emboss {
+            text-shadow: none;
+        }
+        .title-element {
+            transition: all 0.2s ease-in-out;
+            cursor: pointer;
+        }
+        .title-element:hover {
+            transform: scale(1.02);
+            text-shadow: 0 0 14px var(--accent-blue);
+        }
+        .title-icon:hover {
+            color: var(--accent-blue);
+            filter: drop-shadow(0 0 10px var(--accent-blue));
+        }
+        .sidebar-icon {
+            transition: all 0.2s ease-in-out;
+        }
+        .sidebar-icon:hover,
+        .sidebar-icon.active {
+            transform: scale(1.1);
+            color: var(--accent-blue);
+            filter: drop-shadow(0 0 10px var(--accent-blue));
+        }
+        .edit-mode .glassmorphism-inner {
+            border: 1px dashed var(--accent-blue);
+            cursor: move;
+            box-shadow: 0 0 25px rgba(0, 170, 255, 0.35);
+            position: relative;
+        }
+        .edit-mode .widget-controls {
+            display: flex;
+        }
+        .widget-controls {
+            display: none;
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            z-index: 10;
+            background: rgba(35, 35, 35, 0.65);
+            backdrop-filter: blur(12px);
+            border-radius: 14px;
+            padding: 5px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.35), var(--gradual-border);
+        }
+        .widget-control-btn {
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 5px;
+            transition: color 0.2s ease, transform 0.2s ease, filter 0.2s ease;
+        }
+        .widget-control-btn:hover {
+            color: var(--accent-blue);
+            transform: scale(1.1);
+            filter: drop-shadow(0 0 8px var(--accent-blue));
+        }
+        .edit-dashboard-btn {
+            background-color: rgba(0, 170, 255, 0.1);
+            border: 1px solid transparent;
+            color: var(--accent-blue);
+            transition: all 0.2s ease-in-out;
+            box-shadow: inset 0 0 0 1px rgba(0, 170, 255, 0.25);
+        }
+        .edit-dashboard-btn:hover,
+        .edit-dashboard-btn.active {
+            background-color: rgba(0, 170, 255, 0.2);
+            box-shadow: inset 0 0 0 1px rgba(0, 170, 255, 0.4), 0 0 15px rgba(0, 170, 255, 0.45);
+            transform: scale(1.05);
+        }
+        .profile-dropdown {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px) scale(0.95);
+            transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
+        }
+        .profile-container:hover .profile-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0) scale(1);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24
+        }
+        .h-px.bg-gradual {
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+            height: 1px;
+        }
+    </style>
+<script>
+        function toggleEditMode() {
+            const mainContent = document.getElementById('main-content');
+            const editButton = document.getElementById('edit-button');
+            mainContent.classList.toggle('edit-mode');
+            editButton.classList.toggle('active');
+        }
+    </script>
+</head>
+<body class="flex w-full h-full">
+<div class="fixed top-0 left-0 h-screen w-24">
+<aside class="glassmorphism-sidebar w-full h-full flex flex-col items-center py-6 liquid-glass">
+<div class="mb-10">
+<svg class="w-12 h-12 text-[var(--accent-blue)] title-element" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" style="filter: drop-shadow(0 0 12px var(--accent-blue));" viewBox="0 0 24 24">
+<path d="M2 17l10 5 10-5"></path>
+<path d="M2 12l10 5 10-5"></path>
+<path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+</svg>
+</div>
+<nav class="flex flex-col items-center space-y-2 flex-grow">
+<a class="flex items-center justify-center p-4 rounded-xl text-[var(--accent-blue)] bg-[rgba(0,170,255,0.15)] w-16 h-16" href="#">
+<span class="material-symbols-outlined sidebar-icon active !text-3xl" style="font-variation-settings: 'FILL' 1, 'wght' 400;">home</span>
+</a>
+<a class="flex items-center justify-center p-4 rounded-xl text-[var(--text-secondary)] hover:bg-[rgba(255,255,255,0.05)] w-16 h-16" href="#">
+<span class="material-symbols-outlined sidebar-icon !text-3xl">memory</span>
+</a>
+<a class="flex items-center justify-center p-4 rounded-xl text-[var(--text-secondary)] hover:bg-[rgba(255,255,255,0.05)] w-16 h-16" href="#">
+<span class="material-symbols-outlined sidebar-icon !text-3xl">bar_chart_4_bars</span>
+</a>
+<a class="flex items-center justify-center p-4 rounded-xl text-[var(--text-secondary)] hover:bg-[rgba(255,255,255,0.05)] w-16 h-16" href="#">
+<span class="material-symbols-outlined sidebar-icon !text-3xl">folder_open</span>
+</a>
+</nav>
+<div class="w-full px-4 mb-4">
+<div class="h-px bg-gradual my-4"></div>
+</div>
+<div class="flex flex-col items-center space-y-2">
+<a class="flex items-center justify-center p-4 rounded-xl text-[var(--text-secondary)] hover:bg-[rgba(255,255,255,0.05)] w-16 h-16" href="#">
+<span class="material-symbols-outlined sidebar-icon !text-3xl">settings</span>
+</a>
+<a class="flex items-center justify-center p-4 rounded-xl text-[var(--text-secondary)] hover:bg-[rgba(255,255,255,0.05)] w-16 h-16" href="#">
+<span class="material-symbols-outlined sidebar-icon !text-3xl">help_outline</span>
+</a>
+<div class="profile-container relative">
+<div class="w-16 h-16 flex items-center justify-center">
+<img alt="User Avatar" class="w-12 h-12 rounded-full border-2 border-transparent shadow-md cursor-pointer title-element" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB-GlIr3BBSTEI3OuCmciTnxEnrMpmRWmxOgCskkb4THXkD5Jg0VvRE8I9M8kDTrL6bA-7UeEf20utKyGKaHLm7aOpX_qTzENynJQmuVOI_MhG_5lEdpXl8PI96M-1xkAsjTFOWRMRYpZurkxyPhLyECnPRGa2xYNghDvLxXAodeD9CVxRt8YsrZKkawKj2dgN9VA0BgJxIg06wYGpkyz1GeX_9L7aajG3UjsHzlUJV1uSwx3un9MnkhTyKANdTuApwz2eP9OOYPCQ" style="box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1), 0 0 8px 1px rgba(255, 255, 255, 0.08);"/>
+</div>
+</div>
+</div>
+</aside>
+</div>
+<div class="flex-1 flex flex-col ml-24 h-full">
+<header class="glassmorphism-titlebar h-24 px-10 flex items-center justify-between sticky top-0 z-20 m-6 mb-0 rounded-t-[30px] relative overflow-hidden liquid-glass">
+<h1 class="text-3xl font-bold title-element tracking-tighter">Dashboard</h1>
+<div class="flex items-center space-x-6">
+<div class="flex items-center space-x-3 px-4 py-2 glassmorphism-inner rounded-full">
+<div class="status-circle status-green"></div>
+<span class="text-sm font-medium text-[var(--text-secondary)]">System Status: <span class="text-[var(--accent-green)] font-semibold">Normal</span></span>
+</div>
+<div class="w-px h-8 bg-gradual"></div>
+<button class="flex items-center space-x-3 px-5 py-3 rounded-xl edit-dashboard-btn title-element" id="edit-button" onclick="toggleEditMode()">
+<span class="material-symbols-outlined text-xl">edit</span>
+<span class="text-sm font-semibold">Customize</span>
+</button>
+<div class="relative profile-container">
+<button class="flex items-center space-x-4 p-2.5 glassmorphism-inner rounded-xl title-element">
+<img alt="User Avatar" class="w-10 h-10 rounded-lg border border-transparent shadow-sm" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB-GlIr3BBSTEI3OuCmciTnxEnrMpmRWmxOgCskkb4THXkD5Jg0VvRE8I9M8kDTrL6bA-7UeEf20utKyGKaHLm7aOpX_qTzENynJQmuVOI_MhG_5lEdpXl8PI96M-1xkAsjTFOWRMRYpZurkxyPhLyECnPRGa2xYNghDvLxXAodeD9CVxRt8YsrZKkawKj2dgN9VA0BgJxIg06wYGpkyz1GeX_9L7aajG3UjsHzlUJV1uSwx3un9MnkhTyKANdTuApwz2eP9OOYPCQ" style="box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12), 0 2px 4px rgba(0,0,0,0.2);"/>
+<div class="text-left">
+<div class="font-semibold text-sm text-[var(--text-primary)]">Alex R.</div>
+<div class="text-xs text-[var(--text-secondary)]">Admin</div>
+</div>
+<span class="material-symbols-outlined text-[var(--text-secondary)]">expand_more</span>
+</button>
+<div class="profile-dropdown absolute top-full right-0 mt-3 w-64 glassmorphism rounded-2xl p-4 z-30">
+<div class="space-y-2">
+<a class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-[rgba(0,170,255,0.1)] transition-colors duration-200 group" href="#">
+<span class="material-symbols-outlined text-[var(--text-secondary)] group-hover:text-[var(--accent-blue)] transition-colors duration-200" style="filter: drop-shadow(0 0 8px rgba(0,170,255,0));">palette</span>
+<span class="text-sm text-[var(--text-primary)]">Theme</span>
+</a>
+<a class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-[rgba(0,170,255,0.1)] transition-colors duration-200 group" href="#">
+<span class="material-symbols-outlined text-[var(--text-secondary)] group-hover:text-[var(--accent-blue)] transition-colors duration-200">notifications</span>
+<span class="text-sm text-[var(--text-primary)]">Notifications</span>
+</a>
+<a class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-[rgba(0,170,255,0.1)] transition-colors duration-200 group" href="#">
+<span class="material-symbols-outlined text-[var(--text-secondary)] group-hover:text-[var(--accent-blue)] transition-colors duration-200">language</span>
+<span class="text-sm text-[var(--text-primary)]">Language</span>
+</a>
+<div class="h-px bg-gradual my-2"></div>
+<a class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-[rgba(255,77,77,0.15)] transition-colors duration-200 group" href="#">
+<span class="material-symbols-outlined text-[var(--text-secondary)] group-hover:text-[var(--accent-red)] transition-colors duration-200">logout</span>
+<span class="text-sm text-[var(--text-primary)]">Logout</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</header>
+<main class="flex-1 p-6 pt-0 overflow-y-auto" id="main-content" style="height: calc(1080px - 96px);">
+<div class="glassmorphism w-full h-full p-8 grid grid-cols-12 gap-8 rounded-b-[30px] rounded-t-none border-t-0 liquid-glass">
+<div class="col-span-12 lg:col-span-3 space-y-8">
+<div class="glassmorphism-inner p-6 relative">
+<div class="widget-controls">
+<span class="material-symbols-outlined widget-control-btn">drag_indicator</span>
+<span class="material-symbols-outlined widget-control-btn">close</span>
+</div>
+<h2 class="text-lg font-semibold mb-4 tracking-tight text-[var(--text-secondary)]">Machine Status</h2>
+<div class="space-y-4">
+<div class="flex justify-between items-center">
+<p class="text-[var(--text-primary)] text-sm">CNC Machine 1</p>
+<div class="w-5 h-5 rounded-full flex items-center justify-center bg-black/10" style="box-shadow: inset 0 0 0 1px rgba(255,255,255,0.1)">
+<div class="status-circle status-green"></div>
+</div>
+</div>
+<div class="flex justify-between items-center">
+<p class="text-[var(--text-primary)] text-sm">Welding Robot</p>
+<div class="w-5 h-5 rounded-full flex items-center justify-center bg-black/10" style="box-shadow: inset 0 0 0 1px rgba(255,255,255,0.1)">
+<div class="status-circle status-yellow"></div>
+</div>
+</div>
+<div class="flex justify-between items-center">
+<p class="text-[var(--text-secondary)] text-sm">Conveyor Belt A</p>
+<div class="w-5 h-5 rounded-full flex items-center justify-center bg-black/10" style="box-shadow: inset 0 0 0 1px rgba(255,255,255,0.1)">
+<div class="status-circle status-green"></div>
+</div>
+</div>
+<div class="flex justify-between items-center">
+<p class="text-[var(--text-secondary)] text-sm">Packaging Unit</p>
+<div class="w-5 h-5 rounded-full flex items-center justify-center bg-black/10" style="box-shadow: inset 0 0 0 1px rgba(255,255,255,0.1)">
+<div class="status-circle status-red"></div>
+</div>
+</div>
+<div class="flex justify-between items-center">
+<p class="text-[var(--text-secondary)] text-sm">Assembly Line 3</p>
+<div class="w-5 h-5 rounded-full flex items-center justify-center bg-black/10" style="box-shadow: inset 0 0 0 1px rgba(255,255,255,0.1)">
+<div class="w-2 h-2 rounded-full bg-gray-600"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="glassmorphism-inner p-6 relative">
+<div class="widget-controls">
+<span class="material-symbols-outlined widget-control-btn">drag_indicator</span>
+<span class="material-symbols-outlined widget-control-btn">close</span>
+</div>
+<h2 class="text-lg font-semibold mb-4 tracking-tight text-[var(--text-secondary)]">Critical Alerts</h2>
+<div class="space-y-4">
+<div class="flex items-start space-x-3.5">
+<span class="material-symbols-outlined text-[var(--accent-red)] mt-0.5" style="filter: drop-shadow(0 0 8px var(--accent-red)); font-variation-settings: 'FILL' 1, 'wght' 500;">error</span>
+<p class="text-sm text-[var(--text-primary)] leading-tight">Pressure limit exceeded on CNC-1</p>
+</div>
+<div class="flex items-start space-x-3.5">
+<span class="material-symbols-outlined text-[var(--accent-yellow)] mt-0.5" style="filter: drop-shadow(0 0 8px var(--accent-yellow)); font-variation-settings: 'FILL' 1, 'wght' 500;">info</span>
+<p class="text-sm text-[var(--text-secondary)] leading-tight">Upcoming maintenance: Welding Robot</p>
+</div>
+<div class="flex items-start space-x-3.5">
+<span class="material-symbols-outlined text-[var(--accent-red)] mt-0.5" style="filter: drop-shadow(0 0 8px var(--accent-red)); font-variation-settings: 'FILL' 1, 'wght' 500;">error</span>
+<p class="text-sm text-[var(--text-primary)] leading-tight">Motor fault detected on Packager</p>
+</div>
+</div>
+</div>
+<div class="glassmorphism-inner p-6 relative">
+<div class="widget-controls">
+<span class="material-symbols-outlined widget-control-btn">drag_indicator</span>
+<span class="material-symbols-outlined widget-control-btn">close</span>
+</div>
+<h2 class="text-lg font-semibold mb-4 tracking-tight text-[var(--text-secondary)]">Component Health</h2>
+<div class="space-y-4">
+<div class="flex items-center justify-between">
+<span class="text-[var(--text-primary)] text-sm">CNC Spindle</span>
+<div class="w-2/3 h-2 bg-black/25 rounded-full" style="box-shadow: inset 0 0 0 1px rgba(255,255,255,0.1)">
+<div class="h-full bg-[var(--accent-green)] rounded-full" style="width: 92%; box-shadow: 0 0 9px var(--accent-green);"></div>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-[var(--text-primary)] text-sm">Robot Arm Servo</span>
+<div class="w-2/3 h-2 bg-black/25 rounded-full" style="box-shadow: inset 0 0 0 1px rgba(255,255,255,0.1)">
+<div class="h-full bg-[var(--accent-yellow)] rounded-full" style="width: 58%; box-shadow: 0 0 9px var(--accent-yellow);"></div>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-[var(--text-primary)] text-sm">Conveyor Motor</span>
+<div class="w-2/3 h-2 bg-black/25 rounded-full" style="box-shadow: inset 0 0 0 1px rgba(255,255,255,0.1)">
+<div class="h-full bg-[var(--accent-red)] rounded-full" style="width: 25%; box-shadow: 0 0 9px var(--accent-red);"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="col-span-12 lg:col-span-9 grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="glassmorphism-inner p-6 col-span-1 md:col-span-3 relative">
+<div class="widget-controls">
+<span class="material-symbols-outlined widget-control-btn">drag_indicator</span>
+<span class="material-symbols-outlined widget-control-btn">close</span>
+</div>
+<h2 class="text-lg font-semibold mb-3 tracking-tight text-[var(--text-secondary)]">Multi-Sensor Historical Trends (24h)</h2>
+<div class="w-full h-56">
+<svg height="100%" preserveAspectRatio="none" viewBox="0 0 500 200" width="100%">
+<defs>
+<linearGradient id="tempGradient" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="var(--accent-blue)" stop-opacity="0.35"></stop>
+<stop offset="100%" stop-color="var(--accent-blue)" stop-opacity="0"></stop>
+</linearGradient>
+<filter height="140%" id="shadow-blue" width="140%" x="-20%" y="-20%">
+<feGaussianBlur in="SourceAlpha" result="blur" stdDeviation="3.5"></feGaussianBlur>
+<feOffset dx="0" dy="5" in="blur" result="offsetBlur"></feOffset>
+<feFlood flood-color="var(--accent-blue)" flood-opacity="0.3" result="offsetColor"></feFlood>
+<feComposite in="offsetColor" in2="offsetBlur" operator="in" result="offsetBlur"></feComposite>
+<feMerge>
+<feMergeNode in="offsetBlur"></feMergeNode>
+<feMergeNode in="SourceGraphic"></feMergeNode>
+</feMerge>
+</filter>
+</defs>
+<line stroke="rgba(255,255,255,0.15)" stroke-width="1" x1="0" x2="500" y1="50" y2="50"></line>
+<line stroke="rgba(255,255,255,0.15)" stroke-width="1" x1="0" x2="500" y1="100" y2="100"></line>
+<line stroke="rgba(255,255,255,0.15)" stroke-width="1" x1="0" x2="500" y1="150" y2="150"></line>
+<path d="M 0 120 L 50 110 L 100 130 L 150 100 L 200 90 L 250 115 L 300 125 L 350 105 L 400 95 L 450 110 L 500 100" fill="url(#tempGradient)" stroke="var(--accent-blue)" stroke-width="2.5" style="filter: url(#shadow-blue);"></path>
+<path d="M 0 160 L 50 155 L 100 165 L 150 150 L 200 170 L 250 160 L 300 180 L 350 175 L 400 165 L 450 170 L 500 180" fill="none" stroke="var(--accent-green)" stroke-dasharray="5 3" stroke-width="2.5" style="filter: drop-shadow(0 3px 6px rgba(0,255,170,0.3));"></path>
+<path d="M 0 80 L 50 70 L 100 90 L 150 60 L 200 50 L 250 75 L 300 85 L 350 65 L 400 55 L 450 70 L 500 60" fill="none" stroke="var(--accent-yellow)" stroke-width="2.5" style="filter: drop-shadow(0 3px 6px rgba(255,214,51,0.3));"></path>
+</svg>
+</div>
+<div class="flex justify-center space-x-8 -mt-2 text-sm text-[var(--text-secondary)]">
+<div class="flex items-center space-x-2.5">
+<div class="w-3 h-3 rounded-sm bg-[var(--accent-blue)]" style="box-shadow: 0 0 9px var(--accent-blue);"></div>
+<span>Temp (CNC-1)</span>
+</div>
+<div class="flex items-center space-x-2.5">
+<div class="w-3 h-3 rounded-sm bg-[var(--accent-yellow)]" style="box-shadow: 0 0 9px var(--accent-yellow);"></div>
+<span>Vibration (CNC-1)</span>
+</div>
+<div class="flex items-center space-x-2.5">
+<div class="w-3 h-3 rounded-sm bg-[var(--accent-green)]" style="box-shadow: 0 0 9px var(--accent-green);"></div>
+<span>Pressure (CNC-1)</span>
+</div>
+</div>
+</div>
+<div class="glassmorphism-inner p-6 flex flex-col items-center justify-center relative">
+<div class="widget-controls">
+<span class="material-symbols-outlined widget-control-btn">drag_indicator</span>
+<span class="material-symbols-outlined widget-control-btn">close</span>
+</div>
+<h3 class="text-base font-semibold mb-4 tracking-tight text-[var(--text-secondary)]">CNC-1 Temp</h3>
+<div class="relative w-40 h-40">
+<div class="absolute inset-0 glass-gauge rounded-full flex justify-center items-center">
+<div class="text-center">
+<p class="text-4xl font-bold tracking-tighter">72<span class="text-xl align-super font-semibold">°C</span></p>
+</div>
+</div>
+<svg class="absolute inset-0" style="transform: rotate(-135deg); filter: drop-shadow(0 5px 8px rgba(0,170,255,0.25));" viewBox="0 0 100 100">
+<circle cx="50" cy="50" fill="none" r="45" stroke="rgba(255,255,255,0.15)" stroke-dasharray="212" stroke-dashoffset="0" stroke-width="9"></circle>
+<circle cx="50" cy="50" fill="none" r="45" stroke="var(--accent-blue)" stroke-dasharray="282.74" stroke-dashoffset="127.23" stroke-linecap="round" stroke-width="9"></circle>
+</svg>
+</div>
+</div>
+<div class="glassmorphism-inner p-6 flex flex-col items-center justify-center relative">
+<div class="widget-controls">
+<span class="material-symbols-outlined widget-control-btn">drag_indicator</span>
+<span class="material-symbols-outlined widget-control-btn">close</span>
+</div>
+<h3 class="text-base font-semibold mb-4 tracking-tight text-[var(--text-secondary)]">Robot Amperage</h3>
+<div class="relative w-40 h-40">
+<div class="absolute inset-0 glass-gauge rounded-full flex justify-center items-center">
+<div class="text-center">
+<p class="text-4xl font-bold tracking-tighter">12.5<span class="text-xl align-baseline font-semibold"> A</span></p>
+</div>
+</div>
+<svg class="absolute inset-0" style="transform: rotate(-135deg); filter: drop-shadow(0 5px 8px rgba(255,214,51,0.25));" viewBox="0 0 100 100">
+<circle cx="50" cy="50" fill="none" r="45" stroke="rgba(255,255,255,0.15)" stroke-dasharray="212" stroke-dashoffset="0" stroke-width="9"></circle>
+<circle cx="50" cy="50" fill="none" r="45" stroke="var(--accent-yellow)" stroke-dasharray="282.74" stroke-dashoffset="141.37" stroke-linecap="round" stroke-width="9"></circle>
+</svg>
+</div>
+</div>
+<div class="glassmorphism-inner p-6 flex flex-col items-center justify-center relative">
+<div class="widget-controls">
+<span class="material-symbols-outlined widget-control-btn">drag_indicator</span>
+<span class="material-symbols-outlined widget-control-btn">close</span>
+</div>
+<h3 class="text-base font-semibold mb-4 tracking-tight text-[var(--text-secondary)]">Packager Pressure</h3>
+<div class="relative w-40 h-40">
+<div class="absolute inset-0 glass-gauge rounded-full flex justify-center items-center">
+<div class="text-center">
+<p class="text-4xl font-bold tracking-tighter">1.8<span class="text-xl align-baseline font-semibold"> bar</span></p>
+</div>
+</div>
+<svg class="absolute inset-0" style="transform: rotate(-135deg); filter: drop-shadow(0 5px 8px rgba(255,77,77,0.25));" viewBox="0 0 100 100">
+<circle cx="50" cy="50" fill="none" r="45" stroke="rgba(255,255,255,0.15)" stroke-dasharray="212" stroke-dashoffset="0" stroke-width="9"></circle>
+<circle cx="50" cy="50" fill="none" r="45" stroke="var(--accent-red)" stroke-dasharray="282.74" stroke-dashoffset="70.68" stroke-linecap="round" stroke-width="9"></circle>
+</svg>
+</div>
+</div>
+<div class="md:col-span-3 glassmorphism-inner p-8 grid grid-cols-1 md:grid-cols-2 gap-8 items-center relative">
+<div class="widget-controls">
+<span class="material-symbols-outlined widget-control-btn">drag_indicator</span>
+<span class="material-symbols-outlined widget-control-btn">close</span>
+</div>
+<div>
+<h2 class="text-lg font-semibold mb-4 tracking-tight text-[var(--text-secondary)]">Predictive Maintenance</h2>
+<h3 class="text-base font-semibold text-center mb-3 text-[var(--text-secondary)]">Failure Probability Trend</h3>
+<div class="w-full h-44">
+<svg height="100%" preserveAspectRatio="none" viewBox="0 0 500 150" width="100%">
+<defs>
+<linearGradient id="failGradient" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="var(--accent-red)" stop-opacity="0.4"></stop>
+<stop offset="100%" stop-color="var(--accent-red)" stop-opacity="0"></stop>
+</linearGradient>
+<filter height="140%" id="shadow-red" width="140%" x="-20%" y="-20%">
+<feGaussianBlur in="SourceAlpha" result="blur" stdDeviation="4.5"></feGaussianBlur>
+<feOffset dx="0" dy="6" in="blur" result="offsetBlur"></feOffset>
+<feFlood flood-color="var(--accent-red)" flood-opacity="0.35" result="offsetColor"></feFlood>
+<feComposite in="offsetColor" in2="offsetBlur" operator="in" result="offsetBlur"></feComposite>
+<feMerge>
+<feMergeNode in="offsetBlur"></feMergeNode>
+<feMergeNode in="SourceGraphic"></feMergeNode>
+</feMerge>
+</filter>
+</defs>
+<line stroke="rgba(255,255,255,0.15)" stroke-width="1" x1="0" x2="500" y1="37.5" y2="37.5"></line>
+<line stroke="rgba(255,255,255,0.15)" stroke-width="1" x1="0" x2="500" y1="75" y2="75"></line>
+<line stroke="rgba(255,255,255,0.15)" stroke-width="1" x1="0" x2="500" y1="112.5" y2="112.5"></line>
+<path d="M 0 140 L 50 135 L 100 130 L 150 120 L 200 105 L 250 90 L 300 70 L 350 45 L 400 25 L 450 15 L 500 10" fill="url(#failGradient)" stroke="var(--accent-red)" stroke-width="3" style="filter: url(#shadow-red);"></path>
+<text fill="var(--text-secondary)" font-size="12" x="0" y="150">Now</text>
+<text fill="var(--text-secondary)" font-size="12" text-anchor="end" x="500" y="150">+14 Days</text>
+<text fill="var(--text-secondary)" font-size="12" text-anchor="end" x="-5" y="15">100%</text>
+<text fill="var(--text-secondary)" font-size="12" text-anchor="end" x="-5" y="145">0%</text>
+</svg>
+</div>
+<p class="text-center text-sm text-[var(--text-secondary)] -mt-2">Welding Robot Failure Probability</p>
+</div>
+<div class="space-y-8">
+<div>
+<h3 class="text-base font-semibold text-[var(--text-primary)] mb-3">Remaining Useful Life (RUL)</h3>
+<div class="flex items-center space-x-4">
+<span class="material-symbols-outlined text-[var(--accent-green)] text-4xl" style="filter: drop-shadow(0 0 12px var(--accent-green)); font-variation-settings: 'FILL' 1, 'wght' 400;">timelapse</span>
+<div>
+<p class="text-[var(--text-primary)] font-semibold text-base">CNC Machine 1: Est. 250 hours</p>
+<p class="text-sm text-[var(--text-secondary)]">Monitor vibration &amp; plan part replacement.</p>
+</div>
+</div>
+</div>
+<div>
+<h3 class="text-base font-semibold text-[var(--text-primary)] mb-3">Anomaly Detection</h3>
+<div class="flex items-center space-x-4">
+<span class="material-symbols-outlined text-[var(--accent-red)] text-4xl" style="filter: drop-shadow(0 0 12px var(--accent-red)); font-variation-settings: 'FILL' 1, 'wght' 500;">error</span>
+<div>
+<p class="text-[var(--text-primary)] font-semibold text-base">Packaging Unit: Current draw spike.</p>
+<p class="text-sm text-[var(--text-secondary)]">Investigate motor power logs for faults.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

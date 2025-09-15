@@ -1,0 +1,78 @@
+<svg width="200" height="120" viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Gradientes para o E (amarelo/laranja) -->
+    <linearGradient id="eGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#F59E0B;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#F97316;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#EA580C;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Gradiente para sombra do E -->
+    <linearGradient id="eShadow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#92400E;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#7C2D12;stop-opacity:0.9" />
+    </linearGradient>
+    
+    <!-- Gradientes para o 3 (cinza) -->
+    <linearGradient id="threeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#9CA3AF;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#6B7280;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#4B5563;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Gradiente para sombra do 3 -->
+    <linearGradient id="threeShadow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#374151;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#1F2937;stop-opacity:0.9" />
+    </linearGradient>
+    
+    <!-- Filtro para brilho -->
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/> 
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Sombra do E -->
+  <g transform="translate(4, 4)">
+    <path d="M20 20 L20 100 L90 100 L90 85 L40 85 L40 65 L80 65 L80 50 L40 50 L40 35 L90 35 L90 20 Z" 
+          fill="url(#eShadow)" 
+          opacity="0.6"/>
+  </g>
+  
+  <!-- Letra E principal -->
+  <g>
+    <path d="M20 20 L20 100 L90 100 L90 85 L40 85 L40 65 L80 65 L80 50 L40 50 L40 35 L90 35 L90 20 Z" 
+          fill="url(#eGradient)" 
+          stroke="#D97706" 
+          stroke-width="2"
+          filter="url(#glow)"/>
+    
+    <!-- Detalhes de brilho no E -->
+    <path d="M25 25 L25 30 L85 30 L85 25 Z" fill="#FCD34D" opacity="0.7"/>
+    <path d="M25 25 L30 25 L30 95 L25 95 Z" fill="#FCD34D" opacity="0.7"/>
+  </g>
+  
+  <!-- Sombra do 3 -->
+  <g transform="translate(4, 4)">
+    <path d="M110 20 L110 35 L140 35 Q155 35 155 45 Q155 52 148 55 Q155 58 155 65 Q155 75 140 75 L110 75 L110 90 L145 90 Q170 90 170 70 Q170 62 162 57 Q170 52 170 45 Q170 20 145 20 Z" 
+          fill="url(#threeShadow)" 
+          opacity="0.6"/>
+  </g>
+  
+  <!-- Número 3 principal -->
+  <g>
+    <path d="M110 20 L110 35 L140 35 Q155 35 155 45 Q155 52 148 55 Q155 58 155 65 Q155 75 140 75 L110 75 L110 90 L145 90 Q170 90 170 70 Q170 62 162 57 Q170 52 170 45 Q170 20 145 20 Z" 
+          fill="url(#threeGradient)" 
+          stroke="#4B5563" 
+          stroke-width="2"
+          filter="url(#glow)"/>
+    
+    <!-- Detalhes de brilho no 3 -->
+    <path d="M115 25 L115 30 L140 30 Q150 30 150 35 L145 35 Q115 35 115 25 Z" fill="#D1D5DB" opacity="0.7"/>
+    <path d="M115 25 L120 25 L120 85 L115 85 Z" fill="#D1D5DB" opacity="0.7"/>
+  </g>
+</svg>
